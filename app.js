@@ -7,7 +7,7 @@ let options = new chrome.Options();
 options.setChromeBinaryPath('/usr/local/bin/chromedriver');
 
 // Use headless mode if running on a server to avoid display errors
-options.headless();
+// options.headless();
 
 const app = express();
 const port = process.env.PORT || 3000;
