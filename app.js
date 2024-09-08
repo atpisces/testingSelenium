@@ -2,12 +2,19 @@ const express = require('express');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
+// Create an Express app
 const app = express();
-const port = 3000;
+
+// Use environment variable for the port, default to 3000 if not set
+const port = process.env.PORT || 3000;
+
+// Root endpoint handler
+app.get('/', (req, res) => {
+  res.send('Welcome to the Selenium Express server. Go to /run-selenium to execute the script.');
+});
 
 // Endpoint to run the Selenium script
 app.get('/run-selenium', async (req, res) => {
-  // Set Chrome options
   let options = new chrome.Options();
 
   // Initialize the WebDriver
@@ -26,12 +33,11 @@ app.get('/run-selenium', async (req, res) => {
     console.error(error);
     res.status(500).send('Error executing Selenium script');
   } finally {
-    // Quit the driver
     await driver.quit();
   }
 });
 
 // Start the Express server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
+  console.log(`Server running at http://localhost:${port}`);
+});
